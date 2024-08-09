@@ -9,12 +9,12 @@ const login = async (req, res) => {
       .select([
         "users.id",
         "users.name",
-        "users.email",
+        "users.username",
         "users.password",
         "users.created_at",
         "users.updated_at",
       ])
-      .where("email", req.body.email)
+      .where("username", req.body.username)
       .first();
 
     if (user && (await bcrypt.compare(req.body.password, user.password))) {
@@ -22,7 +22,7 @@ const login = async (req, res) => {
         .select([
           "users.id",
           "users.name",
-          "users.email",
+          "users.username",
           "users.password",
           "users.created_at",
           "users.updated_at",
@@ -56,17 +56,17 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    let userCheck = await User.query().where("email", req.body.email).first();
+    let userCheck = await User.query().where("username", req.body.username).first();
     if (userCheck) {
       return res.status(400).json({
         status: 400,
-        message: "Email not available!",
+        message: "username not available!",
       });
     }
 
     const user = await User.query().insert({
       name: req.body.name,
-      email: req.body.email,
+      username: req.body.username,
       password: await bcrypt.hash(req.body.password, 10),
     });
 
@@ -83,7 +83,21 @@ const register = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    res.status(200).json({
+      message: "Logout success!",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal Server Error!",
+    });
+  }
+};
+
 module.exports = {
   login,
   register,
+  logout,
 };

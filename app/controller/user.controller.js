@@ -23,7 +23,7 @@ const store = async (req, res) => {
   try {
     const user = await User.query().insert({
       name: req.body.name,
-      email: req.body.email,
+      username: req.body.username,
       password: await bcrypt.hash(req.body.password, 10),
     });
 
@@ -63,7 +63,7 @@ const update = async (req, res) => {
       .findById(req.params.id)
       .patch({
         name: req.body.name,
-        email: req.body.email,
+        username: req.body.username,
       });
 
       if(req.body.password){

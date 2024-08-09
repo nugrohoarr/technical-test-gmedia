@@ -13,13 +13,13 @@ class User extends Model {
     return {
       type: "object",
 
-      required: ["name", "email", "password"],
+      required: ["name", "username", "password"],
 
       properties: {
         name: {
           type: "string",
         },
-        email: {
+        username: {
           type: "string",
         },
         password: {

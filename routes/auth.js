@@ -19,12 +19,12 @@ const AuthValidator = require("../app/validator/auth.validator");
  *           schema:
  *            type: object
  *            required:
- *              - email
+ *              - username
  *              - password
  *            properties:
- *              email:
+ *              username:
  *               type: string
- *               example: admin@mail.com
+ *               example: admin2
  *              password:
  *               type: string
  *               example: password
@@ -57,15 +57,15 @@ router.post("/login", AuthValidator.login, AuthController.login);
  *            type: object
  *            required:
  *              - name
- *              - email
+ *              - username
  *              - password
  *            properties:
  *              name:
  *               type: string
  *               example: Jonatan
- *              email:
+ *              username:
  *               type: string
- *               example: admin@example.com
+ *               example: jonatan123
  *              password:
  *               type: string
  *               example: password
@@ -82,5 +82,24 @@ router.post("/login", AuthValidator.login, AuthController.login);
  *        description: Server Error
  */
 router.post("/register", AuthValidator.register, AuthController.register);
+
+/**
+ * @openapi
+ * /logout:
+ *  get:
+ *     tags:
+ *     - Admin Auth
+ *     summary: Logout
+ *     security:
+ *	     - bearerAuth: []
+ *     responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
+router.get("/logout", AuthController.logout);
 
 module.exports = router;
